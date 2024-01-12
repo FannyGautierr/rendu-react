@@ -10,6 +10,8 @@ import Home from './Pages/Home';
 import Product from './Pages/Product'
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { CartProvider } from './Providers/CartContext';
+import ShoppingCart from './Pages/ShoppingCart';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,10 @@ const router = createBrowserRouter([
     path: "/product/:id",
     element: <Product />
   },
+  {
+    path: '/shoping-cart',
+    element: <ShoppingCart />
+  }
 ]);
 
 
@@ -27,7 +33,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
       </Provider>
   </React.StrictMode>
 );

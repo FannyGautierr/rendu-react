@@ -14,7 +14,7 @@ export const productAPI = createApi({
       providesTags: ["comments"]
     }),
     createComment: builder.mutation({
-      query: (data,id) => ({
+      query: ({data,id}) => ({
         url:`/products/${id}/comments`,
         method:"POST",
         body: data

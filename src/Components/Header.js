@@ -3,9 +3,11 @@ import { IoMdSearch } from "react-icons/io";
 import { IoBagHandle } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useCart } from "../Providers/CartContext";
+import { useEffect } from "react";
 
 export default function Header(){
-
+    let { cart, addToCart } = useCart()
     return(
         <header className="fixed top-0 z-50 w-full shadow-sm py-2 bg-white">
             <nav className="flex items-center justify-between w-full p-4 bg-white ">
@@ -16,7 +18,7 @@ export default function Header(){
                     <p className="text-sm text-black">Collections</p>
                 </div>
                 <div className="flex items-center justify-between">
-                    <h1 className="text-xl font-bold">E-commerce</h1>
+                    <Link to={'/'} className="text-xl font-bold">E-commerce</Link>
                 </div>
                 <div className="flex items-center justify-end w-1/3 gap-10 ">
                     <div className="flex items-center justify-between gap-2">
@@ -29,7 +31,7 @@ export default function Header(){
                     </div> */}
                     <div className="flex items-center justify-between gap-2">
                         <IoBagHandle/>
-                        <Link to={'/mycart'} className="text-sm text-black">Your Bag (0)</Link>
+                        <Link to={'/shoping-cart'} className="text-sm text-black">Your Bag ({cart.length})</Link>
                     </div>
                 </div>
             </nav>
