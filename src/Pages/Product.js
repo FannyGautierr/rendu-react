@@ -23,6 +23,7 @@ export default function Products(){
         createComment({data:commentData, id});
     }
     const handleInputChange = (e) => {
+        e.preventDefault()
         const { name, value } = e.target;
         console.log(name,value)
         setCommentData(prev => ({ ...prev, [name]: value }));
@@ -45,19 +46,24 @@ export default function Products(){
                 <img src={specificProduct.image} alt={specificProduct.title} className="h-64 w-64 object-cover "/>
                 <div className="w-1/2">
                     <h1 className="text-2xl ">{specificProduct.title}</h1>
-                    <p>{specificProduct.price} €</p>
-                    <p>{specificProduct.quantity}</p>
-                    <p>{specificProduct.price_per_measure}</p>
+                    <p className="font-bold">{specificProduct.title}</p>
+                    <p> {specificProduct.price} €</p>
+                    <p>quantité restante : {specificProduct.quantity} </p>
+                    {
+                        !specificProduct.price_per_measure ? null :
+                
+                    <p className="font-thin text-zinc-500">{Math.round(specificProduct.price_per_measure)}€ / {specificProduct.unit_of_measurement}</p>
+                    }
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 mt-5">
                     <div class="relative flex items-center max-w-[8rem]">
                         <button 
                             type="button" 
                             id="decrement-button" 
                             onClick={()=>{setNumberOfItem(numberOfItem - 1)}} 
-                            class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+                            class="bg-gray-100  hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
                         >
-                            <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                            <svg class="w-3 h-3 text-gray-900 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                             </svg>
                         </button>
@@ -65,7 +71,7 @@ export default function Products(){
                             type="text" 
                             id="quantity-input" 
                             data-input-counter aria-describedby="helper-text-explanation" 
-                            class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5" 
                             placeholder="999" 
                             min={0}
                             max={999}
@@ -76,15 +82,15 @@ export default function Products(){
                          type="button" 
                          id="increment-button" 
                          onClick={()=>{setNumberOfItem(numberOfItem + 1)}}
-                         class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+                         class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
                          >
-                            <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                            <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                             </svg>
                         </button>
                     </div>
                     <button 
-                    onClick={()=>{addToCart({id:specificProduct.id, numberOfItem})}}
+                    onClick={()=>{addToCart({id:specificProduct.id, product:specificProduct, numberOfItem})}}
                     className="flex gap-2 items-center px-2 py-1 border border-zinc-200 hover:bg-zinc-200 transition-colors rounded-lg">
                         <IoBagHandle />
                         Add to cart
@@ -93,7 +99,7 @@ export default function Products(){
                 </div>
             </div>
             <h1 className="text-2xl font-bold text-center">Comments</h1>
-            <div className="border border-zinc-200 m-auto w-fit p-4 rounded ">
+            <div className="border border-zinc-200 w-full p-4 rounded mb-10 px-10 m-auto">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                     <label>
                         <p>Comment</p>
@@ -115,7 +121,7 @@ export default function Products(){
                             onChange={handleInputChange}
                         />
                     </label>
-                     <button type="submit" className="rounded border border-zinc-300">Add comment</button>
+                     <button type="submit" className="rounded border border-zinc-300 hover:bg-zinc-300">New comment</button>
                 </form>
             </div>
          

@@ -11,7 +11,7 @@ export default function Products(){
     console.log(products)
 
     return(
-        <div className="grid grid-cols-4 w-full px-10 gap-5 m-auto items-stretch place-items-stretch">
+        <div className="grid grid-cols-3 w-full px-10 gap-5 m-auto items-stretch place-items-stretch">
             {products.map((product)=>{
                 return <ProductCard key={product.id} product={product}/>
             })}
