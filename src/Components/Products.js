@@ -8,7 +8,6 @@ export default function Products(){
 
     if (error) return <p>Error</p>
     if (isLoading) return <p>Loading...</p>
-    console.log(products)
 
     return(
         <div className="grid grid-cols-3 w-full px-10 gap-5 m-auto items-stretch place-items-stretch">

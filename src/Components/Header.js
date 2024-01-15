@@ -12,10 +12,7 @@ export default function Header(){
         <header className="fixed top-0 z-50 w-full shadow-sm py-2 bg-white">
             <nav className="flex items-center justify-between w-full p-4 bg-white ">
                 <div className="flex items-center justify-between w-1/3">
-                    <IoIosMenu  className="h-5 w-5"/>
-                    <p className="text-sm text-black">New</p>
-                    <p className="text-sm text-black">Shop all</p>
-                    <p className="text-sm text-black">Collections</p>
+                 
                 </div>
                 <div className="flex items-center justify-between">
                     <Link to={'/'} className="text-xl font-bold">E-commerce</Link>

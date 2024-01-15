@@ -9,7 +9,6 @@ import { useCart } from "../Providers/CartContext";
 export default function Products(){
     let {id} = useParams()
     let { cart, addToCart } = useCart()
-    console.log(cart)
     const { data: allProducts, isLoading, isError } = useGetProductsQuery();
 
     const { data: comments, isLoading: isLoadingComment} = useGetCommentsQuery(id);
@@ -25,7 +24,6 @@ export default function Products(){
     const handleInputChange = (e) => {
         e.preventDefault()
         const { name, value } = e.target;
-        console.log(name,value)
         setCommentData(prev => ({ ...prev, [name]: value }));
     };
    
@@ -60,7 +58,10 @@ export default function Products(){
                         <button 
                             type="button" 
                             id="decrement-button" 
-                            onClick={()=>{setNumberOfItem(numberOfItem - 1)}} 
+                            onClick={()=>{
+                                if(numberOfItem - 1 < 0) return
+                                setNumberOfItem(numberOfItem - 1)
+                            }} 
                             class="bg-gray-100  hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
                         >
                             <svg class="w-3 h-3 text-gray-900 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
@@ -68,20 +69,21 @@ export default function Products(){
                             </svg>
                         </button>
                         <input 
-                            type="text" 
+                            type="number" 
                             id="quantity-input" 
-                            data-input-counter aria-describedby="helper-text-explanation" 
-                            class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5" 
+                            class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-[80px] py-2.5 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                             placeholder="999" 
-                            min={0}
-                            max={999}
+                            min='0'
+                            max='2'
                             value={numberOfItem} 
                             required
                             />
                         <button
                          type="button" 
                          id="increment-button" 
-                         onClick={()=>{setNumberOfItem(numberOfItem + 1)}}
+                         onClick={()=>{
+                            if(numberOfItem + 1 > specificProduct.quantity) return
+                            setNumberOfItem(numberOfItem + 1)}}
                          class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100  focus:ring-2 focus:outline-none"
                          >
                             <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
@@ -90,8 +92,12 @@ export default function Products(){
                         </button>
                     </div>
                     <button 
-                    onClick={()=>{addToCart({id:specificProduct.id, product:specificProduct, numberOfItem})}}
-                    className="flex gap-2 items-center px-2 py-1 border border-zinc-200 hover:bg-zinc-200 transition-colors rounded-lg">
+                    onClick={()=>{
+                        const isInCart = cart.some((item) => item.product.id === specificProduct.id);
+                        if(isInCart) return
+                        addToCart({id:specificProduct.id, product:specificProduct, numberOfItem})
+                    }}
+                        className="flex gap-2 items-center px-2 py-1 border border-zinc-200 hover:bg-zinc-200 transition-colors rounded-lg">
                         <IoBagHandle />
                         Add to cart
                     </button>

@@ -3,8 +3,6 @@ import { Link } from "react-router-dom"
 import { Path } from "react-router-dom"
 
 export default function ProductCard(props){
-    const url = window.location.href;
-    console.log(url)
     return(
         <Link to={`/product/${props.product.id}`} className="shadow p-4 flex flex-col items-start justify-between gap-2 hover:shadow-lg transition-shadow ">
             <img src={props.product.image} alt={props.product.title} className="h-40 m-auto"/>
